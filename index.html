@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Port Score Example</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="bundle.js"></script>
+  <script>
+    var app = Elm.Main.fullscreen();
+    app.ports.requestScore.subscribe(function(game){
+      var scoreString = localStorage.getItem(game);
+      var score = parseInt(scoreString) || 0 ;
+      app.ports.score.send(score);
+    });
+    app.ports.saveScore.subscribe(function(model){
+      localStorage.setItem(model.name, model.score);
+    });
+
+  </script>
+</body>
+
+</html>
